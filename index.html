@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MD Locações - Vistorias</title>
+<style>
+  body { font-family: "Segoe UI", system-ui, sans-serif; background: #0F172A; color: #F8FAFC; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+  .card { background: #1E293B; border-radius: 16px; padding: 30px; max-width: 420px; width: 100%; }
+  .titulo { text-align: center; margin-bottom: 24px; }
+  .titulo .icone { font-size: 52px; }
+  .titulo h1 { font-size: 24px; font-weight: 800; }
+  .titulo p { color: #94A3B8; font-size: 14px; }
+  .link-card { display: block; background: #0F172A; border: 2px solid #334155; border-radius: 12px; padding: 16px; margin-bottom: 12px; text-decoration: none; color: #F8FAFC; transition: border-color 0.2s; }
+  .link-card:hover { border-color: #3B82F6; }
+  .link-card .nome { font-size: 18px; font-weight: 700; }
+  .link-card .veiculo { font-size: 14px; color: #94A3B8; margin-top: 2px; }
+  .link-card.admin { border-color: #F59E0B; }
+  .link-card.admin:hover { border-color: #D97706; }
+  .btn { display: inline-block; background: #3B82F6; color: white; padding: 8px 16px; border-radius: 8px; font-size: 13px; margin-top: 8px; }
+  .status { text-align: center; margin-top: 16px; font-size: 12px; color: #94A3B8; }
+  .status .verde { color: #10B981; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="titulo">
+    <div class="icone">🚗</div>
+    <h1>MD LOCAÇÕES</h1>
+    <p>Sistema de Vistorias de Veículos</p>
+  </div>
+
+  <a class="link-card" href="m1.html">
+    <div class="nome">👨 Antônio</div>
+    <div class="veiculo">Fiat Mobi — RUB9H61</div>
+    <span class="btn">Abrir vistoria →</span>
+  </a>
+
+  <a class="link-card" href="m2.html">
+    <div class="nome">👩 Eslaine</div>
+    <div class="veiculo">Fiat Mobi — SIB8I77</div>
+    <span class="btn">Abrir vistoria →</span>
+  </a>
+
+  <a class="link-card" href="m3.html">
+    <div class="nome">👨 Matheus</div>
+    <div class="veiculo">Fiat Mobi — RUB 9H43</div>
+    <span class="btn">Abrir vistoria →</span>
+  </a>
+
+  <a class="link-card admin" href="admin.html">
+    <div class="nome">⚙️ Administração</div>
+    <div class="veiculo">Painel do administrador (senha: locaomd123)</div>
+    <span class="btn" style="background: #F59E0B;">Abrir painel →</span>
+  </a>
+
+  <div class="status">
+    Servidor: <span class="verde" id="status-servidor">● Verificando...</span>
+  </div>
+</div>
+
+<script src="redirect.js"></script>
+<script>
+async function verificarStatus() {
+  const url = await getTunnelUrl();
+  const el = document.getElementById('status-servidor');
+  if (url) {
+    try {
+      const r = await fetch(url + '/', { method: 'HEAD', mode: 'no-cors' });
+      el.textContent = '● Online';
+      el.className = 'verde';
+    } catch (e) {
+      el.textContent = '● Offline';
+      el.className = '';
+      el.style.color = '#EF4444';
+    }
+  } else {
+    el.textContent = '● Offline';
+    el.style.color = '#EF4444';
+  }
+}
+verificarStatus();
+setInterval(verificarStatus, 30000);
+</script>
+</body>
+</html>
